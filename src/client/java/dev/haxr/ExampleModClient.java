@@ -1,4 +1,4 @@
-package com.example;
+package dev.haxr;
 
 import net.fabricmc.api.ClientModInitializer;
 
