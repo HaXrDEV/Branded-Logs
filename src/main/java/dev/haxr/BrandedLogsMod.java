@@ -1,27 +1,14 @@
 package dev.haxr;
 
 import net.fabricmc.api.ModInitializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
-
-import java.io.IOException;
-
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.SystemDetails;
 
 
@@ -41,7 +28,7 @@ public class BrandedLogsMod implements ModInitializer {
 
         sysDetails = sysDetails.replaceFirst("Java Version: (\\d+)", "Java Version: $1 ");
 
-        LOGGER.info(" ----------={ Branded Logs }=----------\n" + modpackInfo() + sysDetails);
+        LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + modpackInfo() + sysDetails + "\n--------------------------------------------------");
     }
 
     private String modpackInfo() {
