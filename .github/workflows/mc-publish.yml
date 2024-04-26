@@ -3,7 +3,7 @@ name: Publish on GitHub, CurseForge & Modrinth
 on: [ workflow_dispatch ]
 
 env:
-  MINECRAFT_VERSION: 1.20.1
+  MINECRAFT_VERSION: [1.20.1, 1.20.2, 1.20.3, 1.20.4, 1.20.5]
   JAVA_VERSION: 17
   VERSION: 1.1.0+1.20.x
   RELEASE_NAME: Branded Logs v1.1.0 for 1.20.x
@@ -56,6 +56,8 @@ jobs:
           version-type: release
           changelog-file: CHANGELOG.md                                      
 
-          loaders: fabric
+          loaders: |
+            fabric
+            quilt
           game-versions: "${{env.MINECRAFT_VERSION}}"
           java: "${{env.JAVA_VERSION}}"
