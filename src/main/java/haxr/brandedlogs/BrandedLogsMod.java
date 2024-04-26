@@ -1,4 +1,4 @@
-package dev.haxr;
+package haxr.brandedlogs;
 
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -10,6 +10,8 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.util.SystemDetails;
+import net.minecraft.util.crash.CrashReport;
+import net.minecraft.util.crash.CrashReportSection;
 
 
 public class BrandedLogsMod implements ModInitializer {
@@ -28,15 +30,19 @@ public class BrandedLogsMod implements ModInitializer {
 
         sysDetails = sysDetails.replaceFirst("Java Version: (\\d+)", "Java Version: $1 ");
 
-        LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + modpackInfo() + sysDetails + "\n--------------------------------------------------");
+        LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + sysDetails + "\n--------------------------------------------------");
     }
 
-    private String modpackInfo() {
+    public static void crashBranding(CrashReportSection section) {
+        section.add("Modpack", modpackInfo());
+    }
+
+    private static String modpackInfo() {
         try {
             JsonElement name = JsonParser.parseReader(new FileReader("./resources/modpack/modpackname.txt"));
             JsonElement version = JsonParser.parseReader(new FileReader("./resources/modpack/modpackversion.txt"));
 
-            return "Modpack: " + name.getAsString() + " " + version.getAsString()
+            return name.getAsString() + " " + version.getAsString()
                     + "\n";
         } catch (JsonIOException e) {
         } catch (JsonSyntaxException e) {

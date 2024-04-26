@@ -1,0 +1,1 @@
+- Added modpack branding to crash logs.

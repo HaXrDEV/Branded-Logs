@@ -16,10 +16,11 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dev.haxr.BrandedLogsMod"
+			"haxr.brandedlogs.BrandedLogsMod"
 		]
 	},
 	"mixins": [
+		"mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.10",
