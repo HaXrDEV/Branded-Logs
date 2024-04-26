@@ -1,1 +1,1 @@
-- Added modpack branding to crash logs.
+- Fixed crash log branding having an extra line break at the end.

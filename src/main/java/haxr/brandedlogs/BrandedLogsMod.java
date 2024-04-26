@@ -30,7 +30,7 @@ public class BrandedLogsMod implements ModInitializer {
 
         sysDetails = sysDetails.replaceFirst("Java Version: (\\d+)", "Java Version: $1 ");
 
-        LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + sysDetails + "\n--------------------------------------------------");
+        LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + "\n" + sysDetails + "\n--------------------------------------------------");
     }
 
     public static void crashBranding(CrashReportSection section) {
@@ -42,8 +42,8 @@ public class BrandedLogsMod implements ModInitializer {
             JsonElement name = JsonParser.parseReader(new FileReader("./resources/modpack/modpackname.txt"));
             JsonElement version = JsonParser.parseReader(new FileReader("./resources/modpack/modpackversion.txt"));
 
-            return name.getAsString() + " " + version.getAsString()
-                    + "\n";
+            return name.getAsString() + " " + version.getAsString();
+
         } catch (JsonIOException e) {
         } catch (JsonSyntaxException e) {
         } catch (FileNotFoundException e) {
