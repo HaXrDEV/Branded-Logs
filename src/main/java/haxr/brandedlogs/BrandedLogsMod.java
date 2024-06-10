@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,6 +39,7 @@ public class BrandedLogsMod implements ModInitializer {
 
         // Writes information to resource text files if enabled in config.
         if (BrandedLogsConfig.getInstance().doWriteToResourceTextFile)
+            createResourceDirectory("./resources/modpack");
             writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
             writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
 
@@ -101,6 +103,22 @@ public class BrandedLogsMod implements ModInitializer {
         } catch (NullPointerException e) {
         } catch (IOException e) {
             LOGGER.info("An error occurred while writing to the file: " + e.getMessage());
+        }
+    }
+
+    // Tries to create modpack resource directory in case it doesn't already exist.
+    public static void createResourceDirectory(String pathString) {
+        // Specify the directory path
+        Path directoryPath = Paths.get(pathString);
+
+        try {
+            // Create the directory
+            Files.createDirectory(directoryPath);
+            System.out.println("Directory created successfully");
+        } catch (FileAlreadyExistsException e) {
+            System.err.println("Directory already exists: " + directoryPath);
+        } catch (IOException e) {
+            System.err.println("Failed to create directory: " + e.getMessage());
         }
     }
 }
