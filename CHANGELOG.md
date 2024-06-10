@@ -1,1 +1,3 @@
+- Changed functionality to instead parse the config from *Better Compatibility Checker* for the modpack name and version.
+- Added functionality that overrides the contents of modpackname.txt & modpackversion.txt files with the parsed information.
 - Fixed crash log branding having an extra line break at the end.
