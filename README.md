@@ -1,18 +1,16 @@
-"Branded Logs" is a simple mod that allows modpack creators to print additional information about the modpack into the logs of the game. Like the name of the modpack and its version, in addition to information about the users machine, operating system, java version and ram allocation.
+"Branded Logs" is a simple mod that allows modpack creators to print additional information about their modpack into the logs of the game. Like the name of the modpack and its version, in addition to information about the users machine, operating system, java version and ram allocation.
 
 As a modpack author, you may often receive logs by players asking for help regarding an issue or crash. With this mod, there will no longer be any confusion as to what version of your modpack a log has been generated from. You also will no longer have to ask them about the hardware or java configuration of their system, as that can easily be deduced from the logs!
 
-This mod is greatly inspired by [[Log More Info]](https://github.com/FederAndInk/log_more_info).
+In case you were wondering. Yes, this mod is greatly inspired by [[Log More Info]](https://github.com/FederAndInk/log_more_info).
 
 ### So how do you use it?
 
-The mod works out of the box. But in order to get the version number and modpack name to show in the logs, you need to do a bit of setup.
+The mod works out of the box. Though in order to get the version number and modpack name to show up in the logs a config from *Better Compatibility Checker* needs to be present (as that is used to parse the modpack information).
 
-1. Create a directory like this: "./resources/modpack".
-2. Create two TXT files inside. The first being for the name called "modpackname.txt" and the second being "modpackversion.txt" for the version of the modpack.
-3. Make sure to avoid writing any spaces into the files as that will make the modpack name and version not show in the logs.
+You can get that either by using the *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)* mod itself to generate a config. Or by grabbing it here and placing it into the config folder of the game: [[bcc.json]](https://gist.github.com/HaXrBOT/7788f9c237344a286993ed4e1f66088d)
 
-These files should then be shipped with your modpack. Do be sure to update the version number inside the "modpackversion.txt" file every time you are going to post a new version of your modpack.
+Then you should at least fill out the fields *modpackName* and *modpackVersion*, and you are done!
 
 ### Example:
 
