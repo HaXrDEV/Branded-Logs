@@ -1,4 +1,4 @@
 - Changed functionality to instead parse the config from *Better Compatibility Checker* for the modpack name and version.
 - Added config option to write modpack information into modpackname.txt and modpackversion.txt files upon initialize.
-- Added apostrophe around modpack name when printing to logs.
+- Added apostrophes around the modpack name when printing to logs.
 - Fixed crash log branding having an extra line break at the end.
