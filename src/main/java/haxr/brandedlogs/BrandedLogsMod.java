@@ -1,6 +1,9 @@
 package haxr.brandedlogs;
 
 import com.google.gson.*;
+import haxr.brandedlogs.config.BrandedLogsConfig;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +24,8 @@ public class BrandedLogsMod implements ModInitializer {
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("BrandedLogs");
-    public static JsonObject MODPACKINFO = modpackInfoObject();
+    public static final String MOD_ID = "brandedlogs";
+    public static JsonObject MODPACK_INFO = modpackInfoObject();
 
     @Override
     public void onInitialize() {
@@ -29,14 +33,24 @@ public class BrandedLogsMod implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
-        writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
+        // Registers the config screen.
+        AutoConfig.register(BrandedLogsConfig.class, JanksonConfigSerializer::new);
+
+        // Writes information to resource text files if enabled in config.
+        if (BrandedLogsConfig.getInstance().doWriteToResourceTextFile)
+            writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
+            writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
 
         String sysDetails = new SystemDetails().collect();
 
         sysDetails = sysDetails.replaceFirst("Java Version: (\\d+)", "Java Version: $1 ");
 
-        LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + "\n" + sysDetails + "\n--------------------------------------------------");
+        if (MODPACK_INFO != null) {
+            LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + "\n" + sysDetails + "\n--------------------------------------------------");
+        }
+        else {
+            LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + sysDetails + "\n--------------------------------------------------");
+        }
 
     }
 
@@ -56,14 +70,15 @@ public class BrandedLogsMod implements ModInitializer {
         } catch (FileNotFoundException e) {
         } catch (NullPointerException e) {
         }
+        LOGGER.info("An error occurred while reading the bcc.json file.");
         return null;
     }
 
 
     private static String modpackInfo() {
         try {
-            JsonObject obj = MODPACKINFO;
-            return obj.get("modpackName").getAsString() + " version " + obj.get("modpackVersion").getAsString();
+            JsonObject obj = MODPACK_INFO;
+            return "'" + obj.get("modpackName").getAsString() + "' v" + obj.get("modpackVersion").getAsString();
         } catch (JsonIOException e) {
         } catch (JsonSyntaxException e) {
         } catch (NullPointerException e) {
@@ -75,7 +90,7 @@ public class BrandedLogsMod implements ModInitializer {
     public static void writeResourceTextFile(String pathString, String objectKey) {
         Path path = Paths.get(pathString);
         try {
-            JsonObject obj = MODPACKINFO;
+            JsonObject obj = MODPACK_INFO;
             String content = obj.get(objectKey).getAsString();
             Files.writeString(path, content);
 

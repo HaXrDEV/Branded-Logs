@@ -2,8 +2,8 @@
 	"schemaVersion": 1,
 	"id": "brandedlogs",
 	"version": "${version}",
-	"name": "Branded Logs Fabric",
-	"description": "A simple mod that prints information about the modpack into the logs (like its name and version)",
+	"name": "Branded Logs",
+	"description": "Lets modpack authors print information about their modpack into the logs & crash logs!",
 	"authors": [
 		"HaXr"
 	],
@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"haxr.brandedlogs.BrandedLogsMod"
+		],
+		"modmenu": [
+			"haxr.brandedlogs.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [
