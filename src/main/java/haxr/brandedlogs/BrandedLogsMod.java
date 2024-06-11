@@ -39,6 +39,7 @@ public class BrandedLogsMod implements ModInitializer {
 
         // Writes information to resource text files if enabled in config.
         if (BrandedLogsConfig.getInstance().doWriteToResourceTextFile)
+            createResourceDirectory("./resources");
             createResourceDirectory("./resources/modpack");
             writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
             writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
@@ -118,6 +119,7 @@ public class BrandedLogsMod implements ModInitializer {
         } catch (FileAlreadyExistsException e) {
             System.err.println("Directory already exists: " + directoryPath);
         } catch (IOException e) {
+            //throw new RuntimeException(e); // Uncomment for debugging
             System.err.println("Failed to create directory: " + e.getMessage());
         }
     }
