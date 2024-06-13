@@ -1,1 +1,1 @@
-- Fixed issue with the resource text files not being created when the doWriteToResourceTextFile option is enabled.
+- Updated to 1.21.
