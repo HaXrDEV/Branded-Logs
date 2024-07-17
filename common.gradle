@@ -201,7 +201,7 @@ processResources {
 			sources_url		 : "https://github.com/HaXrBOT/Branded-Logs",
 			issues_url		 : "https://github.com/HaXrBOT/Branded-Logs/issues",
 			license_name: "LGPL 3.0",
-			mod_id              : "brandedlogs", mod_name: "Branded Logs", version: "2.0.2${getVersionMetadata()}",
+			mod_id              : "brandedlogs", mod_name: "Branded Logs", version: "2.0.3${getVersionMetadata()}",
 			mod_author         : "HaXr", pack_format_number: versionsMap[mcVersion],
 	]
 	inputs.properties replaceProperties

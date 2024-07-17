@@ -13,8 +13,7 @@ replacements:
   homepageUrl: "https://modrinth.com/mod/branded-logs"
   sourcesUrl: "https://github.com/HaXrBOT/Branded-Logs"
   issuesUrl: "https://github.com/HaXrBOT/Branded-Logs/issues"
-  mcpublishVersion: "2.0.2"
-  version: "2.0.2"
+  version: "2.0.3"
   breaks: ""
   name: "Branded Logs"
   id: "brandedlogs"
@@ -24,6 +23,7 @@ replacements:
   modrinthid: "tbktcZz2"
   curseforgeid: "882472"
   versionlessname: "BLVersionless"
+  mcpublishVersion: "3.3.0"
 enabledFlags:
   - autopublish
   - publishFabric
