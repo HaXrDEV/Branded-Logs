@@ -4,7 +4,7 @@ plugins {
 
 	// https://github.com/ReplayMod/preprocessor
 	// https://github.com/Fallen-Breath/preprocessor
-	id 'com.replaymod.preprocess' version '88169fc'
+	id 'com.replaymod.preprocess' version '20c7ec554a'
 	id "com.diffplug.spotless" version "6.22.0"
 }
 

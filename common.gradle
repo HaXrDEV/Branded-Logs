@@ -92,10 +92,7 @@ dependencies {
 		testImplementation "net.fabricmc:fabric-loader-junit:${rootProject.fabric_loader_version}"
 		testImplementation 'org.objenesis:objenesis:3.3'
 
-		// Cloth Config
-		modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-			exclude(group: "net.fabricmc.fabric-api")
-		}
+		modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
 
 		if (!file("${project.rootDir}/src/main/resources/fabric.mod.json").exists()) {
 			sourceSets.main.resources.srcDirs += "${project.rootDir}/src/main/fabric-resources"
@@ -103,17 +100,15 @@ dependencies {
 	} else if (mod_brand == 'forge') {
 		forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
-		forgeRuntimeLibrary project(":DHVersionless")
+		forgeRuntimeLibrary project(":BLVersionless") 
 
-		// Cloth Config
 		implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
 
 		sourceSets.main.resources.srcDirs += "${project.rootDir}/src/main/forge-resources"
 	} else if (mod_brand == 'neoforge') {
 		neoForge "net.neoforged:neoforge:${project.neoforge_version}"
-		forgeRuntimeLibrary project(":DHVersionless")
+		forgeRuntimeLibrary project(":BLVersionless") 
 
-		// Cloth Config
 		implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
 
 		sourceSets.main.resources.srcDirs += "${project.rootDir}/src/main/neoforge-resources"
@@ -124,7 +119,7 @@ dependencies {
 
 	
 
-	inc project(":DHVersionless") 
+	inc project(":BLVersionless") 
 
 }
 
@@ -191,10 +186,6 @@ processResources {
 		12100: 34
 	]
 
-	archivesBaseName = rootProject.archives_base_name
-	version = mod_brand + "-" + rootProject.mod_version + "+mc" + project.minecraft_version + getVersionMetadata()
-	group = rootProject.maven_group
-
 	var replaceProperties = [
 			minecraft_version   : minecraft_version, minecraft_version_range_forge: minecraft_dependency,
 			minecraft_version_range_neoforge         : minecraft_dependency,
@@ -210,8 +201,8 @@ processResources {
 			sources_url		 : "https://github.com/HaXrBOT/Branded-Logs",
 			issues_url		 : "https://github.com/HaXrBOT/Branded-Logs/issues",
 			license_name: "LGPL 3.0",
-			mod_id              : "${rootProject.modid}", mod_name: "${rootProject.mod_name}", version: "${rootProject.mod_version}${getVersionMetadata()}",
-			mod_author         : "${rootProject.author}", pack_format_number: versionsMap[mcVersion],
+			mod_id              : "brandedlogs", mod_name: "Branded Logs", version: "2.0.2${getVersionMetadata()}",
+			mod_author         : "HaXr", pack_format_number: versionsMap[mcVersion],
 	]
 	inputs.properties replaceProperties
 
@@ -249,6 +240,9 @@ afterEvaluate { project ->
 	}
 }
 
+archivesBaseName = rootProject.archives_base_name
+version = mod_brand + "-" + rootProject.mod_version + "-mc" + project.minecraft_version + getVersionMetadata()
+group = rootProject.maven_group
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -270,7 +264,6 @@ repositories {
 	maven {
 		url "https://cursemaven.com"
 	}
-	maven { url "https://maven.shedaniel.me/" } // Cloth Config
 	mavenLocal()
 }
 
@@ -308,7 +301,6 @@ def getVersionMetadata() {
 
     // No tracking information could be found about the build
     return "+unknown"
-//	return ""
 }
 
 // Function to delete bin directory recursively
