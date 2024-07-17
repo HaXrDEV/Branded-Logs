@@ -1,4 +1,5 @@
 # **Branded Logs**
+
 This is a simple mod that allows modpack creators to print additional information about their modpack into the game's logs. This includes the name of the modpack and its version, as well as information about the user's machine, operating system, Java version, and RAM allocation.
 
 *This mod was greatly inspired by [[Log More Info]](https://github.com/FederAndInk/log_more_info).*
@@ -14,7 +15,6 @@ As a modpack author, you may often receive logs from players asking for help wit
 For the mod to obtain the version number and name of your modpack, a configuration file from *Better Compatibility Checker* needs to be present. You can either use the *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)* mod itself to generate a config, or grab one here: [[bcc.json]](https://gist.github.com/HaXrBOT/7788f9c237344a286993ed4e1f66088d)
 
 Once that is done, you just need to fill out the fields *modpackName* and *modpackVersion*, and you're all set!
-
 
 ## **Dependencies:**
 
