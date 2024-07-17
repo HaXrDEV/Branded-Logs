@@ -23,8 +23,8 @@ jobs:
           dependency-graph: generate-and-submit
 # Already needs to be executable, so the dirty check is correct
 #      - name: make gradle wrapper executable
-#        if: ${{ runner.os != 'Windows' }}
-#        run: chmod +x ./gradlecw
+       if: ${{ runner.os != 'Windows' }}
+       run: chmod +x ./gradlecw
       - name: build
         run: ./gradlecw build
       - name: capture build artifacts
