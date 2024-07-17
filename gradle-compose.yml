@@ -1,0 +1,34 @@
+version: '0.0.2'
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
+replacements:
+  author: "HaXr"
+  name: "Branded Logs"
+  id: "brandedlogs"
+  version: "2.0.2"
+  description: "Prints information about the modpack into the logs & crash logs!"
+  homepageUrl: "https://modrinth.com/mod/branded-logs"
+  sourcesUrl: "https://github.com/HaXrBOT/Branded-Logs"
+  issuesUrl: "https://github.com/HaXrBOT/Branded-Logs/issues"
+  fabric_entrypoint: "dev.haxr.brandedlogs.BrandedLogsMod"
+  fabric_modmenu_entrypoint: "dev.haxr.brandedlogs.config.ModMenuIntegration"
+  relocationpackage: "dev.haxr.brandedlogs"
+  modrinthid: "tbktcZz2"
+  curseforgeid: "882472"
+  versionlessname: "DHVersionless"
+enabledFlags:
+  - autopublish
+  - publishFabric
+  - publishForge
+  - modrinth
+  - curseforge
+rootProject:
+  template: "."
+subProjects:
+  DHVersionless:
+    template: "Versionless"
+    replacements:
+      dependencies: '
+      compileOnly "com.google.code.gson:gson:2.10.1"
+
+      compileOnly "org.apache.logging.log4j:log4j-core:2.20.0"
+      '

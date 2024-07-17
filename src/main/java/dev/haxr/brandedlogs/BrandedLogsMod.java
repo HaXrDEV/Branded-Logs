@@ -1,10 +1,12 @@
-package haxr.brandedlogs;
+package dev.haxr.brandedlogs;
 
 import com.google.gson.*;
-import haxr.brandedlogs.config.BrandedLogsConfig;
+import dev.haxr.brandedlogs.config.BrandedLogsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.SystemReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
@@ -15,10 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
-
-import net.minecraft.util.SystemDetails;
-import net.minecraft.util.crash.CrashReportSection;
-
 
 public class BrandedLogsMod implements ModInitializer {
     // This logger is used to write text to the console and the log file.
@@ -40,28 +38,27 @@ public class BrandedLogsMod implements ModInitializer {
         // Writes information to resource text files if enabled in config.
         if (BrandedLogsConfig.getInstance().doWriteToResourceTextFile)
             createResourceDirectory("./resources");
-            createResourceDirectory("./resources/modpack");
-            writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
-            writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
+        createResourceDirectory("./resources/modpack");
+        writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
+        writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
 
-        String sysDetails = new SystemDetails().collect();
+        String sysDetails = new SystemReport().toLineSeparatedString();
 
         sysDetails = sysDetails.replaceFirst("Java Version: (\\d+)", "Java Version: $1 ");
 
         if (MODPACK_INFO != null) {
-            LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + "\n" + sysDetails + "\n--------------------------------------------------");
-        }
-        else {
-            LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + sysDetails + "\n--------------------------------------------------");
+            LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + "Modpack: " + modpackInfo() + "\n"
+                    + sysDetails + "\n--------------------------------------------------");
+        } else {
+            LOGGER.info("\n----------------={ Branded Logs }=----------------\n" + sysDetails
+                    + "\n--------------------------------------------------");
         }
 
     }
 
-
-    public static void crashBranding(CrashReportSection section) {
-        section.add("Modpack", modpackInfo());
+    public static void crashBranding(CrashReportCategory category) {
+        category.setDetail("Modpack", modpackInfo());
     }
-
 
     private static JsonObject modpackInfoObject() {
         try {
@@ -77,7 +74,6 @@ public class BrandedLogsMod implements ModInitializer {
         return null;
     }
 
-
     private static String modpackInfo() {
         try {
             JsonObject obj = MODPACK_INFO;
@@ -88,7 +84,6 @@ public class BrandedLogsMod implements ModInitializer {
         }
         return "";
     }
-
 
     public static void writeResourceTextFile(String pathString, String objectKey) {
         Path path = Paths.get(pathString);
@@ -119,7 +114,7 @@ public class BrandedLogsMod implements ModInitializer {
         } catch (FileAlreadyExistsException e) {
             System.err.println("Directory already exists: " + directoryPath);
         } catch (IOException e) {
-            //throw new RuntimeException(e); // Uncomment for debugging
+            // throw new RuntimeException(e); // Uncomment for debugging
             System.err.println("Failed to create directory: " + e.getMessage());
         }
     }

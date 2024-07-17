@@ -1,5 +1,5 @@
 
-package haxr.brandedlogs.config;
+package dev.haxr.brandedlogs.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
