@@ -62,4 +62,8 @@ jobs:
             fabric
             quilt
           # game-versions: "${{env.MINECRAFT_VERSION}}"
+          dependencies: |
+            cloth-config
+            fabric-api
+            better-compatibility-checker(optional)
           java: "${{env.JAVA_VERSION}}"
