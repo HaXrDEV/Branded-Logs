@@ -5,6 +5,7 @@ replacements:
   fabric_dependencies: modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
   forge_dependencies: implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+forge"
   neoforge_dependencies: implementation "maven.modrinth:cloth-config:${project.cloth_config_version}+neoforge"
+  mcpublish_dependencies: "cloth-config"
   licensename: "LICENSE"
   author: "HaXr"
   group: "dev.haxr"
