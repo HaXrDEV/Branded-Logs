@@ -22,14 +22,15 @@ dependencies {
     loom.silentMojangMappingsLicense()
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${mod.dep("fabric_api")}")
+    //modImplementation("net.fabricmc.fabric-api:fabric-api:${mod.dep("fabric_api")}")
     "io.github.llamalad7:mixinextras-common:${mod.dep("mixin_extras")}".let {
         annotationProcessor(it)
         implementation(it)
     }
 
-    //modApi("me.shedaniel.cloth:cloth-config-neoforge:${mod.dep("cloth_config_version")}")
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}")
+    //if (stonecutter.eval(minecraft, "!1.20.1"))
+    //    modApi("me.shedaniel.cloth:cloth-config-neoforge:${mod.dep("cloth_config_version")}")
+    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}")
     //modApi("me.shedaniel.cloth:cloth-config-forge:${mod.dep("cloth_config_version")}")
 
 }

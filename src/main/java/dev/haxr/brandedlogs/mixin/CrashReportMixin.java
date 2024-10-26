@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //? if >=1.21
-/*import net.minecraft.ReportType;*/
+import net.minecraft.ReportType;
 
 
 import java.io.File;
@@ -30,9 +30,9 @@ public class CrashReportMixin {
 
     @Inject(method = "saveToFile", at = @At("HEAD"))
     //? if >=1.21 {
-    /*private void crashbrander$addSection(Path path, ReportType type, List<String> extraInfo, CallbackInfoReturnable callbackInfoReturnable) {
-    *///?} else
-    private void crashbrander$addCategory(File toFile, CallbackInfoReturnable<Boolean> cir) {
+    private void crashbrander$addSection(Path path, ReportType type, List<String> extraInfo, CallbackInfoReturnable callbackInfoReturnable) {
+    //?} else
+    /*private void crashbrander$addCategory(File toFile, CallbackInfoReturnable<Boolean> cir) {*/
         CrashReportCategory category = new CrashReportCategory("Modpack Branding");
         BrandedLogsCommon.crashBranding(category);
         details.add(category);

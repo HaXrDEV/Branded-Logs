@@ -44,12 +44,15 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
-    mappings(loom.layered {
+    /*mappings(loom.layered {
         mappings("net.fabricmc:yarn:$minecraft+build.${common.mod.dep("yarn_build")}:v2")
         common.mod.dep("neoforge_patch").takeUnless { it.startsWith('[') }?.let {
             mappings("dev.architectury:yarn-mappings-patch-neoforge:$it")
         }
-    })
+    })*/
+    loom.silentMojangMappingsLicense()
+    mappings(loom.officialMojangMappings())
+
     "neoForge"("net.neoforged:neoforge:${common.mod.dep("neoforge_loader")}")
     "io.github.llamalad7:mixinextras-neoforge:${mod.dep("mixin_extras")}".let {
         implementation(it)
@@ -106,7 +109,8 @@ tasks.processResources {
         "id" to mod.id,
         "name" to mod.name,
         "version" to mod.version,
-        "minecraft" to common.mod.prop("mc_dep_forgelike")
+        "minecraft" to common.mod.prop("mc_dep_forgelike"),
+        "description" to mod.description
     )
 }
 

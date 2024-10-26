@@ -44,7 +44,10 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
-    mappings("net.fabricmc:yarn:$minecraft+build.${common.mod.dep("yarn_build")}:v2")
+    //mappings("net.fabricmc:yarn:$minecraft+build.${common.mod.dep("yarn_build")}:v2")
+    loom.silentMojangMappingsLicense()
+    mappings(loom.officialMojangMappings())
+
     "forge"("net.minecraftforge:forge:$minecraft-${common.mod.dep("forge_loader")}")
     "io.github.llamalad7:mixinextras-forge:${mod.dep("mixin_extras")}".let {
         implementation(it)
@@ -66,8 +69,8 @@ loom {
 
     forge.convertAccessWideners = true
     forge.mixinConfigs(
-        "template-common.mixins.json",
-        "template-forge.mixins.json",
+        "common.mixins.json",
+        "forge.mixins.json",
     )
 
     runConfigs.all {
@@ -107,7 +110,8 @@ tasks.processResources {
         "id" to mod.id,
         "name" to mod.name,
         "version" to mod.version,
-        "minecraft" to common.mod.prop("mc_dep_forgelike")
+        "minecraft" to common.mod.prop("mc_dep_forgelike"),
+        "description" to mod.description
     )
 }
 

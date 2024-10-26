@@ -1,18 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "*"
-license = "CC0-1.0"
+license = "LGPL-3"
 
 [[mods]]
 modId = "${id}"
 version = "${version}"
 displayName = "${name}"
-authors = "Me"
-description = "This is an example description! Tell everyone what your mod is about!"
-logoFile = "assets/${id}/icon.png"
+authors = "HaXr"
+description = "${description}"
+logoFile = "icon.png" #"assets/${id}/icon.png"
 logoBlur = false
 
 [[mixins]]
 config = "common.mixins.json"
-
-[[mixins]]
-config = "forge.mixins.json"
