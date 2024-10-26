@@ -8,7 +8,7 @@ version = "${version}"
 displayName = "${name}"
 authors = "HaXr"
 description = "${description}"
-logoFile = "assets/${id}/icon.png"
+logoFile = "icon.png"
 logoBlur = false
 
 [[mixins]]
