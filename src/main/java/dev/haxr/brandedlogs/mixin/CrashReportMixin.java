@@ -1,6 +1,6 @@
 package dev.haxr.brandedlogs.mixin;
 
-import dev.haxr.brandedlogs.BrandedLogsMod;
+import dev.haxr.brandedlogs.BrandedLogsCommon;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import org.spongepowered.asm.mixin.Final;
@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-//#if MC >= 12100
-import net.minecraft.ReportType;
-//#endif
+//? if >=1.21 {
+/*import net.minecraft.ReportType;
+*///?}
 
 import java.io.File;
 import java.nio.file.Path;
@@ -29,15 +29,13 @@ public class CrashReportMixin {
     private List<CrashReportCategory> details;
 
     @Inject(method = "saveToFile", at = @At("HEAD"))
-    // spotless:off
-    //#if MC >= 12100
-    private void crashbrander$addSection(Path path, ReportType type, List<String> extraInfo, CallbackInfoReturnable callbackInfoReturnable) {
-    //#else
-    //$$ private void crashbrander$addCategory(File toFile, CallbackInfoReturnable<Boolean> cir) {
-    //#endif
-    //spotless:on
+    //? if >=1.21 {
+    /*private void crashbrander$addSection(Path path, ReportType type, List<String> extraInfo, CallbackInfoReturnable callbackInfoReturnable) {
+    *///?} else
+    private void crashbrander$addCategory(File toFile, CallbackInfoReturnable<Boolean> cir) {
+    //?}
         CrashReportCategory category = new CrashReportCategory("Modpack Branding");
-        BrandedLogsMod.crashBranding(category);
+        BrandedLogsCommon.crashBranding(category);
         details.add(category);
     }
 }
