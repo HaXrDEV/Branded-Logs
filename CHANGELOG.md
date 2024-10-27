@@ -1,2 +1,3 @@
 - Forge & NeoForge support.
+- 1.21.3 support.
 - Migrated to Stonecutter for development.

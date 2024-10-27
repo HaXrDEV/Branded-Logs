@@ -27,7 +27,7 @@ jobs:
           modrinth-id: tbktcZz2
           modrinth-token: ${{secrets.MODRINTH_TOKEN}}
           name: v${{github.ref_name}} for NeoForge 1.21.3
+          loaders: neoforge
           files: |
             build/libs/${{github.ref_name}}/neoforge/*[+.-]1.21.3.jar
             build/libs/${{github.ref_name}}/neoforge/*[+.-]1.21.3-@(dev|sources|javadoc).jar
-    

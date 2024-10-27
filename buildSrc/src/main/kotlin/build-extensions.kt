@@ -73,6 +73,7 @@ fun Project.appendGithubActionPublish(minecraftVersion: String, mcTitle: String)
           modrinth-id: $modrinthid
           modrinth-token: ${'$'}{{secrets.MODRINTH_TOKEN}}
           name: v${'$'}{{github.ref_name}} for $modloader $mcTitle
+          loaders: ${modloader?.lowercase()}
           files: |
             build/libs/${'$'}{{github.ref_name}}/${modloader?.lowercase()}/*[+.-]$minecraftVersion.jar
             build/libs/${'$'}{{github.ref_name}}/${modloader?.lowercase()}/*[+.-]$minecraftVersion-@(dev|sources|javadoc).jar
