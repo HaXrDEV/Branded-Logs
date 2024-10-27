@@ -128,4 +128,4 @@ tasks.register<Copy>("buildAndCollect") {
     dependsOn("build")
 }
 
-appendGithubActionPublish(minecraft)
+appendGithubActionPublish(minecraft, common.mod.prop("mc_title"))

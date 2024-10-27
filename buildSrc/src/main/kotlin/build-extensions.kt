@@ -1,10 +1,8 @@
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
-import org.gradle.kotlin.dsl.expand
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 import org.gradle.language.jvm.tasks.ProcessResources
-import java.util.*
 
 val Project.mod: ModData get() = ModData(this)
 fun Project.prop(key: String): String? = findProperty(key)?.toString()
@@ -39,7 +37,7 @@ value class ModData(private val project: Project) {
 /**
  * This function is responsible for writing the publishing GitHub-Action workflow when building, and runs for each active version.
  */
-fun Project.appendGithubActionPublish(minecraftVersion: String) {
+fun Project.appendGithubActionPublish(minecraftVersion: String, mcTitle: String) {
 
     var actionFile = file("$rootDir/.github/workflows/publish.yml")
     var releaseText = StringBuilder()
@@ -48,21 +46,18 @@ fun Project.appendGithubActionPublish(minecraftVersion: String) {
 
     val curseforgeid = property("publish.curseforge").toString()
     val modrinthid = property("publish.modrinth").toString()
-    //val dependencies = property("publish.dependencies").toString()
-    //val mc_targets = property("mod.mc_targets").toString()
-    val mc_title = property("mod.mc_title").toString()
+    
     val modloader = prop("loom.platform")?.uppercaseFirstChar()
-
     val version = "$minecraftVersion-$modloader"
 
     // Append stuff for CurseForge publishing
     releaseText.append("""
       - name: Publish-$version-Curseforge
-      uses: Kir-Antipov/mc-publish@v$mcpublishVersion
-      with:
+        uses: Kir-Antipov/mc-publish@v$mcpublishVersion
+        with:
           curseforge-id: $curseforgeid
           curseforge-token: ${'$'}{{secrets.CURSEFORGE_TOKEN}}
-          name: v${'$'}{{github.ref_name}} for $modloader $mc_title
+          name: v${'$'}{{github.ref_name}} for $modloader $mcTitle
           files: 'versions/$minecraftVersion/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
 
       - name: Publish-$version-Modrinth
@@ -70,7 +65,7 @@ fun Project.appendGithubActionPublish(minecraftVersion: String) {
         with:
           modrinth-id: $modrinthid
           modrinth-token: ${'$'}{{secrets.MODRINTH_TOKEN}}
-          name: v${'$'}{{github.ref_name}} for $modloader $mc_title
+          name: v${'$'}{{github.ref_name}} for $modloader $mcTitle
           files: 'versions/$minecraftVersion/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
     """)
 

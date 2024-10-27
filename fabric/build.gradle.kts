@@ -119,5 +119,4 @@ tasks.register<Copy>("buildAndCollect") {
     into(rootProject.layout.buildDirectory.file("libs/${mod.version}/$loader"))
     dependsOn("build")
 }
-
-appendGithubActionPublish(minecraft)
+appendGithubActionPublish(minecraft, common.mod.prop("mc_title"))
