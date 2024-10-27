@@ -69,6 +69,22 @@ jobs:
           name: v${{github.ref_name}} for Fabric 1.21.1
           files: 'build/libs/${{github.ref_name}}/fabric/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/fabric/*[+.-]1.21.1.jar'
     
+      - name: Publish-1.21.3-Fabric-Curseforge
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          curseforge-id: ...
+          curseforge-token: ${{secrets.CURSEFORGE_TOKEN}}
+          name: v${{github.ref_name}} for Fabric 1.21.3
+          files: 'build/libs/${{github.ref_name}}/fabric/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/fabric/*[+.-]1.21.3.jar'
+
+      - name: Publish-1.21.3-Fabric-Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          modrinth-id: ...
+          modrinth-token: ${{secrets.MODRINTH_TOKEN}}
+          name: v${{github.ref_name}} for Fabric 1.21.3
+          files: 'build/libs/${{github.ref_name}}/fabric/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/fabric/*[+.-]1.21.3.jar'
+    
       - name: Publish-1.20.1-Forge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
@@ -85,35 +101,51 @@ jobs:
           name: v${{github.ref_name}} for Forge 1.20.1
           files: 'build/libs/${{github.ref_name}}/forge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/forge/*[+.-]1.20.1.jar'
     
-      - name: Publish-1.20.6-Neoforge-Curseforge
+      - name: Publish-1.20.6-NeoForge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           curseforge-id: ...
           curseforge-token: ${{secrets.CURSEFORGE_TOKEN}}
-          name: v${{github.ref_name}} for Neoforge 1.20.6
+          name: v${{github.ref_name}} for NeoForge 1.20.6
           files: 'build/libs/${{github.ref_name}}/neoforge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/neoforge/*[+.-]1.20.6.jar'
 
-      - name: Publish-1.20.6-Neoforge-Modrinth
+      - name: Publish-1.20.6-NeoForge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           modrinth-id: ...
           modrinth-token: ${{secrets.MODRINTH_TOKEN}}
-          name: v${{github.ref_name}} for Neoforge 1.20.6
+          name: v${{github.ref_name}} for NeoForge 1.20.6
           files: 'build/libs/${{github.ref_name}}/neoforge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/neoforge/*[+.-]1.20.6.jar'
     
-      - name: Publish-1.21.1-Neoforge-Curseforge
+      - name: Publish-1.21.1-NeoForge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           curseforge-id: ...
           curseforge-token: ${{secrets.CURSEFORGE_TOKEN}}
-          name: v${{github.ref_name}} for Neoforge 1.21.1
+          name: v${{github.ref_name}} for NeoForge 1.21.1
           files: 'build/libs/${{github.ref_name}}/neoforge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/neoforge/*[+.-]1.21.1.jar'
 
-      - name: Publish-1.21.1-Neoforge-Modrinth
+      - name: Publish-1.21.1-NeoForge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           modrinth-id: ...
           modrinth-token: ${{secrets.MODRINTH_TOKEN}}
-          name: v${{github.ref_name}} for Neoforge 1.21.1
+          name: v${{github.ref_name}} for NeoForge 1.21.1
           files: 'build/libs/${{github.ref_name}}/neoforge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/neoforge/*[+.-]1.21.1.jar'
+    
+      - name: Publish-1.21.3-NeoForge-Curseforge
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          curseforge-id: ...
+          curseforge-token: ${{secrets.CURSEFORGE_TOKEN}}
+          name: v${{github.ref_name}} for NeoForge 1.21.3
+          files: 'build/libs/${{github.ref_name}}/neoforge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/neoforge/*[+.-]1.21.3.jar'
+
+      - name: Publish-1.21.3-NeoForge-Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          modrinth-id: ...
+          modrinth-token: ${{secrets.MODRINTH_TOKEN}}
+          name: v${{github.ref_name}} for NeoForge 1.21.3
+          files: 'build/libs/${{github.ref_name}}/neoforge/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${{github.ref_name}}/neoforge/*[+.-]1.21.3.jar'
     

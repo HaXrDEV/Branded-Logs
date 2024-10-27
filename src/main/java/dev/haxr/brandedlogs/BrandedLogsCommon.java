@@ -45,7 +45,6 @@ public class BrandedLogsCommon {
 
         String sysDetails = new SystemReport().toLineSeparatedString();
 
-
         sysDetails = sysDetails.replaceFirst("Java Version: (\\d+)", "Java Version: $1 ");
 
         if (MODPACK_INFO != null) {

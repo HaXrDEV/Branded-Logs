@@ -47,7 +47,12 @@ fun Project.appendGithubActionPublish(minecraftVersion: String, mcTitle: String)
     val curseforgeid = property("publish.curseforge").toString()
     val modrinthid = property("publish.modrinth").toString()
 
-    val modloader = prop("loom.platform")?.uppercaseFirstChar()
+    val modloader = if (prop("loom.platform") == "neoforge"){
+        "NeoForge"
+    } else {
+        prop("loom.platform")?.uppercaseFirstChar()
+    }
+
     val version = "$minecraftVersion-$modloader"
 
     // Append stuff for CurseForge publishing
