@@ -46,22 +46,38 @@ on:
     types: [published]
 
 jobs:
-  build:
+  build+distribute:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: setup jdk 21
-        uses: actions/setup-java@v1
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
+          distribution: temurin
           java-version: 21
 
-      - name: make gradle wrapper executable
-        run: chmod +x ./gradlew
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+          key: ${'$'}{{runner.os}}-gradle
+          restore-keys: |
+            ${'$'}{{runner.os}}-gradle
 
-      - name: build
-        run: ./gradlew chiseledBuild
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: "wrapper"
+
+      - name: Build JARs
+        uses: Wandalen/wretry.action@master
+        with:
+          command: "gradle chiseledBuild"
+          attempt_limit: 3
 """)
 
 
