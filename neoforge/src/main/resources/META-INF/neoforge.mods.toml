@@ -13,3 +13,25 @@ logoBlur = false
 
 [[mixins]]
 config = "common.mixins.json"
+
+[[dependencies.${id}]] #optional
+modId="neoforge" #mandatory
+type="required" #mandatory
+versionRange="*" #mandatory
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${id}]]
+modId="minecraft"
+type="required"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange="${minecraft}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${id}]] #optional
+modId="cloth_config" #mandatory
+type="required" #mandatory
+versionRange="*" #mandatory
+ordering="NONE"
+side="BOTH"
