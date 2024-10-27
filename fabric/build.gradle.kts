@@ -1,6 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-
 plugins {
     id("dev.architectury.loom")
     id("architectury-plugin")
@@ -120,3 +119,5 @@ tasks.register<Copy>("buildAndCollect") {
     into(rootProject.layout.buildDirectory.file("libs/${mod.version}/$loader"))
     dependsOn("build")
 }
+
+appendGithubActionPublish(minecraft)

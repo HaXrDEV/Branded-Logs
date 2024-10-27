@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.support.uppercaseFirstChar
+import java.util.*
+
 plugins {
     id("dev.architectury.loom")
     id("architectury-plugin")

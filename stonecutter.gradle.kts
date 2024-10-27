@@ -34,3 +34,42 @@ for (it in stonecutter.tree.nodes) {
         dependsOn("run$type")
     }
 }
+
+
+
+// GitHub Action Stuff
+var releaseText = StringBuilder()
+
+releaseText.append("""name: Create Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+
+      - name: setup jdk 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: 21
+
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: build
+        run: ./gradlew chiseledBuild
+""")
+
+
+var actionFile = file("$rootDir/.github/workflows/publish.yml")
+if (actionFile.exists()) {
+    actionFile.writeText(releaseText.toString())
+}
+else {
+    actionFile.createNewFile()
+    actionFile.writeText(releaseText.toString())
+}
