@@ -34,6 +34,11 @@
       "links": {
         "modmenu.discord": "https://discord.gg/Kss5gBgeDA"
       }
+    },
+    "mc-publish": {
+      "dependencies": [
+        "cloth_config(required){modrinth:cloth-config,curseforge:cloth-config}"
+      ]
     }
   }
 }

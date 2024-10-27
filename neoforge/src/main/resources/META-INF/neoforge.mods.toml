@@ -35,3 +35,7 @@ type="required" #mandatory
 versionRange="*" #mandatory
 ordering="NONE"
 side="BOTH"
+[dependencies.mod-id.mc-publish]
+    ignore=false # `mc-publish` will ignore this dependency, if `ignore` is set to true
+    modrinth="cloth-config" # Modrinth's project slug
+    curseforge="cloth-config" # CurseForge's project slug
