@@ -37,7 +37,7 @@
     },
     "mc-publish": {
       "dependencies": [
-        "cloth_config(required){modrinth:cloth-config,curseforge:cloth-config}"
+        "cloth_config(required){modrinth:cloth-config}{curseforge:cloth-config}"
       ]
     }
   }
