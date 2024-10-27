@@ -46,7 +46,7 @@ fun Project.appendGithubActionPublish(minecraftVersion: String, mcTitle: String)
 
     val curseforgeid = property("publish.curseforge").toString()
     val modrinthid = property("publish.modrinth").toString()
-    
+
     val modloader = prop("loom.platform")?.uppercaseFirstChar()
     val version = "$minecraftVersion-$modloader"
 
@@ -58,7 +58,7 @@ fun Project.appendGithubActionPublish(minecraftVersion: String, mcTitle: String)
           curseforge-id: $curseforgeid
           curseforge-token: ${'$'}{{secrets.CURSEFORGE_TOKEN}}
           name: v${'$'}{{github.ref_name}} for $modloader $mcTitle
-          files: 'versions/$minecraftVersion/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'build/libs/${'$'}{{github.ref_name}}/${modloader?.lowercase()}/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${'$'}{{github.ref_name}}/${modloader?.lowercase()}/*[+.-]$minecraftVersion.jar'
 
       - name: Publish-$version-Modrinth
         uses: Kir-Antipov/mc-publish@v$mcpublishVersion
@@ -66,7 +66,7 @@ fun Project.appendGithubActionPublish(minecraftVersion: String, mcTitle: String)
           modrinth-id: $modrinthid
           modrinth-token: ${'$'}{{secrets.MODRINTH_TOKEN}}
           name: v${'$'}{{github.ref_name}} for $modloader $mcTitle
-          files: 'versions/$minecraftVersion/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          files: 'build/libs/${'$'}{{github.ref_name}}/${modloader?.lowercase()}/!(*-@(dev|sources|javadoc|all)).jar;build/libs/${'$'}{{github.ref_name}}/${modloader?.lowercase()}/*[+.-]$minecraftVersion.jar'
     """)
 
     actionFile.appendText(releaseText.toString())
