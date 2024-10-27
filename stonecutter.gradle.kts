@@ -46,7 +46,7 @@ on:
     types: [published]
 
 jobs:
-  build+distribute:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
