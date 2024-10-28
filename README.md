@@ -4,7 +4,9 @@ This is a simple mod that allows modpack creators to print additional informatio
 
 *This mod was greatly inspired by [[Log More Info]](https://github.com/FederAndInk/log_more_info).*
 
-![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg) [![curseforge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/branded-logs) [![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/branded-logs)
+![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg) <!-- SVG version -->
+![neoforge](https://raw.githubusercontent.com/thomasglasser/thomasglasser/refs/heads/main/files/badges/cozy/supported/neoforge_vector.svg)
+![forge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg)
 
 ## **Why would anyone need this?:**
 
@@ -18,10 +20,12 @@ Once that is done, you just need to fill out the fields *modpackName* and *modpa
 
 ## **Dependencies:**
 
-[![cloth-config-api](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/cloth-config-api_vector.svg)](https://modrinth.com/mod/cloth-config) [![fabric-api](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
+[![cloth-config-api](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/cloth-config-api_vector.svg)](https://modrinth.com/mod/cloth-config)
 
 Optional: *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)*
 
-## **Need help?**
 
+## **Links:**
+[![curseforge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/branded-logs)
+[![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/branded-logs)
 [![discord-singular](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg)](https://discord.gg/Kss5gBgeDA)
