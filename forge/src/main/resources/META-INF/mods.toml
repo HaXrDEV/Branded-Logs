@@ -1,0 +1,41 @@
+modLoader = "javafml"
+loaderVersion = "*"
+license = "LGPL-3"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+authors = "HaXr"
+description = "${description}"
+logoFile = "icon.png" #"assets/${id}/icon.png"
+logoBlur = false
+
+[[mixins]]
+config = "common.mixins.json"
+
+[[dependencies.${id}]] #optional
+modId="forge" #mandatory
+type="required" #mandatory
+versionRange="*" #mandatory
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${id}]]
+modId="minecraft"
+type="required"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange="${minecraft}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${id}]] #optional
+modId="cloth_config" #mandatory
+mandatory=true
+versionRange="*" #mandatory
+ordering="NONE"
+side="BOTH"
+[dependencies.${id}.mc-publish]
+    ignore=false # `mc-publish` will ignore this dependency, if `ignore` is set to true
+    modrinth="cloth-config" # Modrinth's project slug
+    curseforge="cloth-config" # CurseForge's project slug

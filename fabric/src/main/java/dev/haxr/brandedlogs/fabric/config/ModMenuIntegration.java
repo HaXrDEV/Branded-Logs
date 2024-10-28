@@ -1,6 +1,7 @@
 
-package dev.haxr.brandedlogs.config;
+package dev.haxr.brandedlogs.fabric.config;
 
+import dev.haxr.brandedlogs.config.BrandedLogsConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;

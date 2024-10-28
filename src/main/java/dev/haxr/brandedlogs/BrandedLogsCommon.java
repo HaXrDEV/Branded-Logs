@@ -4,7 +4,6 @@ import com.google.gson.*;
 import dev.haxr.brandedlogs.config.BrandedLogsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.SystemReport;
 import org.slf4j.Logger;
@@ -18,7 +17,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 
-public class BrandedLogsMod implements ModInitializer {
+public class BrandedLogsCommon {
+
+
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
@@ -26,8 +27,8 @@ public class BrandedLogsMod implements ModInitializer {
     public static final String MOD_ID = "brandedlogs";
     public static JsonObject MODPACK_INFO = modpackInfoObject();
 
-    @Override
-    public void onInitialize() {
+    //@Override
+    public static void init() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
@@ -63,12 +64,8 @@ public class BrandedLogsMod implements ModInitializer {
     private static JsonObject modpackInfoObject() {
         try {
             JsonElement json = JsonParser.parseReader(new FileReader("./config/bcc.json"));
-            JsonObject obj = json.getAsJsonObject();
-            return obj;
-        } catch (JsonIOException e) {
-        } catch (JsonSyntaxException e) {
-        } catch (FileNotFoundException e) {
-        } catch (NullPointerException e) {
+            return json.getAsJsonObject();
+        } catch (JsonIOException | JsonSyntaxException | FileNotFoundException | NullPointerException ignored) {
         }
         LOGGER.info("An error occurred while reading the bcc.json file.");
         return null;
@@ -78,9 +75,7 @@ public class BrandedLogsMod implements ModInitializer {
         try {
             JsonObject obj = MODPACK_INFO;
             return "'" + obj.get("modpackName").getAsString() + "' v" + obj.get("modpackVersion").getAsString();
-        } catch (JsonIOException e) {
-        } catch (JsonSyntaxException e) {
-        } catch (NullPointerException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
         }
         return "";
     }
@@ -94,9 +89,7 @@ public class BrandedLogsMod implements ModInitializer {
 
             LOGGER.info("File created and content written successfully! (" + objectKey + ")");
 
-        } catch (JsonIOException e) {
-        } catch (JsonSyntaxException e) {
-        } catch (NullPointerException e) {
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
         } catch (IOException e) {
             LOGGER.info("An error occurred while writing to the file: " + e.getMessage());
         }
