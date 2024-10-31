@@ -97,7 +97,7 @@ public class BrandedLogsCommon {
                 nameKey = "modpackName";
                 versionKey = "modpackVersion";
                 if(config.parseMinecraftInstanceJson && !new File(INSTANCE_FILE_PATH).isFile()){
-                    LOGGER.info("Falling back to {}", filePath);
+                    LOGGER.error("\'{}\' could not be found. Falling back to \'{}\'", INSTANCE_FILE_PATH, filePath);
                 }
             } else {
                 obj = obj.getAsJsonObject("manifest");
@@ -136,7 +136,7 @@ public class BrandedLogsCommon {
             String content = obj.get(objectKey).getAsString();
             Files.writeString(path, content);
 
-            LOGGER.info("File created and content written successfully! ({})", objectKey);
+            LOGGER.info("File written successfully! (\'{}\')", pathString);
 
         } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
         } catch (IOException e) {
