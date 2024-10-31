@@ -73,11 +73,6 @@ public class BrandedLogsCommon {
         category.setDetail("Modpack", modpackInfo(modpackInfoObj));
     }
 
-
-//    private static boolean usingInstanceFile(){
-//        return config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile();
-//    }
-
     /**
      * Gets JSON object containing modpack name and version information.
      */
@@ -89,7 +84,6 @@ public class BrandedLogsCommon {
         } else {
             filePath = BCC_FILE_PATH;
         }
-        LOGGER.info("Reading {}", filePath); // Helpful for debugging
 
         try {
             JsonElement json = JsonParser.parseReader(new FileReader(filePath));
@@ -102,7 +96,7 @@ public class BrandedLogsCommon {
             if (filePath.equals(BCC_FILE_PATH)) {
                 nameKey = "modpackName";
                 versionKey = "modpackVersion";
-                if(config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile()){
+                if(config.parseMinecraftInstanceJson && !new File(INSTANCE_FILE_PATH).isFile()){
                     LOGGER.info("Falling back to {}", filePath);
                 }
             } else {
@@ -110,6 +104,7 @@ public class BrandedLogsCommon {
                 nameKey = "name";
                 versionKey = "version";
             }
+            LOGGER.info("Reading {}", filePath); // Helpful for debugging
 
             result.add("modpackName", obj.get(nameKey));
             result.add("modpackVersion", obj.get(versionKey));
