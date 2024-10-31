@@ -27,18 +27,13 @@
   "depends": {
     "fabricloader": ">=0.15",
     "minecraft": "${minecraft}",
-    "cloth_config": "*"
+    "cloth-config": "*"
   },
   "custom": {
     "modmenu": {
       "links": {
         "modmenu.discord": "https://discord.gg/Kss5gBgeDA"
       }
-    },
-    "mc-publish": {
-      "dependencies": [
-        "cloth_config(required){modrinth:cloth-config}{curseforge:cloth-config}"
-      ]
     }
   }
 }
