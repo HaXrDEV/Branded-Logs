@@ -27,7 +27,7 @@ public class BrandedLogsCommon {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("BrandedLogs");
     public static final String MOD_ID = "brandedlogs";
-    public static JsonObject modpackInfo;
+    public static JsonObject modpackInfoObj;
     public static BrandedLogsConfig config;
     public static final String INSTANCE_FILE_PATH = "./minecraftinstance.json";
     public static final String BCC_FILE_PATH = "./config/bcc.json";
@@ -43,10 +43,10 @@ public class BrandedLogsCommon {
         config = AutoConfig.getConfigHolder(BrandedLogsConfig.class).getConfig();
 
         // Gets json object containing modpack information.
-        modpackInfo = getModpackInfoObject();
+        modpackInfoObj = getModpackInfoObject();
 
         // Writes information to resource text files if enabled in config.
-        if (config.doWriteToResourceTextFile && modpackInfo != null) {
+        if (config.doWriteToResourceTextFile && modpackInfoObj != null) {
             createResourceDirectory("./resources/modpack");
             writeResourceTextFile("./resources/modpack/modpackversion.txt", "modpackVersion");
             writeResourceTextFile("./resources/modpack/modpackname.txt", "modpackName");
@@ -59,8 +59,8 @@ public class BrandedLogsCommon {
         // Prints information into the logs.
         String header = "\n----------------={ Branded Logs }=----------------";
         String footer = "\n--------------------------------------------------";
-        String content = modpackInfo != null
-                ? String.format("\nModpack: %s\n%s", modpackInfo(), sysDetails)
+        String content = modpackInfoObj != null
+                ? String.format("\nModpack: %s\n%s", modpackInfo(modpackInfoObj), sysDetails)
                 : "\n" + sysDetails;
 
         LOGGER.info("{}{}{}", header, content, footer);
@@ -70,56 +70,74 @@ public class BrandedLogsCommon {
     * Prints modpack branding into the crash logs.
     */
     public static void crashBranding(CrashReportCategory category) {
-        category.setDetail("Modpack", modpackInfo());
+        category.setDetail("Modpack", modpackInfo(modpackInfoObj));
     }
 
+
+//    private static boolean usingInstanceFile(){
+//        return config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile();
+//    }
+
     /**
-     * Gets json object containing modpack information.
+     * Gets JSON object containing modpack name and version information.
      */
     private static JsonObject getModpackInfoObject() {
-        String filePath = "";
+        String filePath;
 
         if (config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile()) {
             filePath = INSTANCE_FILE_PATH;
         } else {
             filePath = BCC_FILE_PATH;
         }
-        LOGGER.info("Reading {}",filePath); // Helpful for debugging
+        LOGGER.info("Reading {}", filePath); // Helpful for debugging
 
         try {
-            JsonElement json;
-            json = JsonParser.parseReader(new FileReader(filePath));
-            return json.getAsJsonObject();
+            JsonElement json = JsonParser.parseReader(new FileReader(filePath));
+            JsonObject obj = json.getAsJsonObject();
+
+            // Extract the relevant fields and create a new JsonObject
+            String nameKey;
+            String versionKey;
+            JsonObject result = new JsonObject();
+            if (filePath.equals(BCC_FILE_PATH)) {
+                nameKey = "modpackName";
+                versionKey = "modpackVersion";
+                if(config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile()){
+                    LOGGER.info("Falling back to {}", filePath);
+                }
+            } else {
+                obj = obj.getAsJsonObject("manifest");
+                nameKey = "name";
+                versionKey = "version";
+            }
+
+            result.add("modpackName", obj.get(nameKey));
+            result.add("modpackVersion", obj.get(versionKey));
+            return result.getAsJsonObject();
+
         } catch (JsonIOException | JsonSyntaxException | FileNotFoundException | NullPointerException ignored) {
         }
         LOGGER.error("An error occurred while reading the {} file.", filePath);
         return null;
     }
 
-    /**
-     * Gets modpack information from modpackInfo object.
-     */
-    private static String modpackInfo() {
-        try {
-            JsonObject obj;
-            if (config.parseMinecraftInstanceJson) {
-                obj = modpackInfo.getAsJsonObject("manifest");
-                return "'" + obj.get("name").getAsString() + "' v" + obj.get("version").getAsString();
-            } else {
-                obj = modpackInfo;
-                return "'" + obj.get("modpackName").getAsString() + "' v" + obj.get("modpackVersion").getAsString();
-            }
-        } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
-        }
-        return "";
-    }
 
+    /**
+     * Takes json object as argument and returns the modpack information as a string.
+     */
+    public static String modpackInfo(JsonObject objArg) {
+        try {
+            return "'" + objArg.get("modpackName").getAsString() + "' v" + objArg.get("modpackVersion").getAsString();
+        } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
+            return "";
+        }
+    }
 
 
     public static void writeResourceTextFile(String pathString, String objectKey) {
         Path path = Paths.get(pathString);
         try {
-            JsonObject obj = modpackInfo;
+            JsonObject obj = modpackInfoObj;
             String content = obj.get(objectKey).getAsString();
             Files.writeString(path, content);
 
