@@ -8,6 +8,8 @@ import net.minecraft.CrashReportCategory;
 import net.minecraft.SystemReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -27,6 +29,8 @@ public class BrandedLogsCommon {
     public static final String MOD_ID = "brandedlogs";
     public static JsonObject modpackInfo;
     public static BrandedLogsConfig config;
+    public static final String INSTANCE_FILE_PATH = "./minecraftinstance.json";
+    public static final String BCC_FILE_PATH = "./config/bcc.json";
 
     //@Override
     public static void init() {
@@ -74,10 +78,11 @@ public class BrandedLogsCommon {
      */
     private static JsonObject getModpackInfoObject() {
         String filePath = "";
-        if (config.parseMinecraftInstanceJson) {
-            filePath = "./minecraftinstance.json";
+
+        if (config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile()) {
+            filePath = INSTANCE_FILE_PATH;
         } else {
-            filePath = "./config/bcc.json";
+            filePath = BCC_FILE_PATH;
         }
         LOGGER.info("Reading {}",filePath); // Helpful for debugging
 
