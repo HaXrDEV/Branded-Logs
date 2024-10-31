@@ -28,10 +28,9 @@ dependencies {
         implementation(it)
     }
 
-    //if (stonecutter.eval(minecraft, "!1.20.1"))
-    //    modApi("me.shedaniel.cloth:cloth-config-neoforge:${mod.dep("cloth_config_version")}")
-    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}")
-    //modApi("me.shedaniel.cloth:cloth-config-forge:${mod.dep("cloth_config_version")}")
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}") {
+        exclude("net.fabricmc.fabric-api")
+    }
 
 }
 
