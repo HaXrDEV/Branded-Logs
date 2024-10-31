@@ -16,14 +16,14 @@ config = "common.mixins.json"
 
 [[dependencies.${id}]] #optional
 modId="forge" #mandatory
-type="required" #mandatory
+mandatory=true
 versionRange="*" #mandatory
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${id}]]
 modId="minecraft"
-type="required"
+mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange="${minecraft}"
 ordering="NONE"

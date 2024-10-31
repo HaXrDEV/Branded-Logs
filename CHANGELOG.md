@@ -1,3 +1,2 @@
-- Forge & NeoForge support.
-- 1.21.3 support.
-- Migrated to Stonecutter for development.
+- Fixed incorrect dependency slug for Cloth Config on Fabric.
+- Fixed incorrect mandatory expressions on Forge.
