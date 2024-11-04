@@ -6,18 +6,16 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.SystemReport;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.IOException;
+import java.util.Properties;
 
 public class BrandedLogsCommon {
 
@@ -29,7 +27,8 @@ public class BrandedLogsCommon {
     public static final String MOD_ID = "brandedlogs";
     public static JsonObject modpackInfoObj;
     public static BrandedLogsConfig config;
-    public static final String INSTANCE_FILE_PATH = "./minecraftinstance.json";
+    public static final String CF_INSTANCE_FILE_PATH = "./minecraftinstance.json";
+    public static final String MMC_INSTANCE_FILE_PATH = "./instance.cfg";
     public static final String BCC_FILE_PATH = "./config/bcc.json";
 
     //@Override
@@ -75,45 +74,85 @@ public class BrandedLogsCommon {
 
     /**
      * Gets JSON object containing modpack name and version information.
+     * Parses the first in prioritized order of BCC_FILE_PATH, CF_INSTANCE_FILE_PATH or MMC_INSTANCE_FILE_PATH.
      */
     private static JsonObject getModpackInfoObject() {
-        String filePath;
-
-        if (config.parseMinecraftInstanceJson && new File(INSTANCE_FILE_PATH).isFile()) {
-            filePath = INSTANCE_FILE_PATH;
-        } else {
-            filePath = BCC_FILE_PATH;
-        }
+        final String filePath = getFilePath();
 
         try {
-            JsonElement json = JsonParser.parseReader(new FileReader(filePath));
-            JsonObject obj = json.getAsJsonObject();
-
-            // Extract the relevant fields and create a new JsonObject
-            String nameKey;
-            String versionKey;
             JsonObject result = new JsonObject();
-            if (filePath.equals(BCC_FILE_PATH)) {
-                nameKey = "modpackName";
-                versionKey = "modpackVersion";
-                if(config.parseMinecraftInstanceJson && !new File(INSTANCE_FILE_PATH).isFile()){
-                    LOGGER.error("\'{}\' could not be found. Falling back to \'{}\'", INSTANCE_FILE_PATH, filePath);
+
+            if (filePath.endsWith(".cfg")) {
+                // Handle .cfg file
+                Properties props = new Properties();
+                try (FileInputStream fis = new FileInputStream(filePath)) {
+                    props.load(fis);
+
+                    String packName = props.getProperty("ManagedPackName");
+                    String packVersion = props.getProperty("ManagedPackVersionName");
+
+                    if (packName != null && packVersion != null) {
+                        result.addProperty("modpackName", packName);
+                        result.addProperty("modpackVersion", packVersion);
+                        LOGGER.info("Reading {} as CFG file", filePath);
+                        return result;
+                    }
                 }
             } else {
-                obj = obj.getAsJsonObject("manifest");
-                nameKey = "name";
-                versionKey = "version";
+                // Handle JSON files
+                JsonElement json = JsonParser.parseReader(new FileReader(filePath));
+                JsonObject obj = json.getAsJsonObject();
+
+                // Extract the relevant fields and create a new JsonObject
+                String nameKey;
+                String versionKey;
+
+                if (filePath.equals(CF_INSTANCE_FILE_PATH)) {
+                    obj = obj.getAsJsonObject("manifest");
+                    nameKey = "name";
+                    versionKey = "version";
+                    if(!new File(BCC_FILE_PATH).isFile()){
+                        LOGGER.error("\'{}\' could not be found. Falling back to \'{}\'", BCC_FILE_PATH, filePath);
+                    }
+                } else {
+                    nameKey = "modpackName";
+                    versionKey = "modpackVersion";
+                }
+                LOGGER.info("Reading {} as JSON file", filePath);
+
+                result.add("modpackName", obj.get(nameKey));
+                result.add("modpackVersion", obj.get(versionKey));
+                return result;
             }
-            LOGGER.info("Reading {}", filePath); // Helpful for debugging
 
-            result.add("modpackName", obj.get(nameKey));
-            result.add("modpackVersion", obj.get(versionKey));
-            return result.getAsJsonObject();
+        } catch (JsonIOException | JsonSyntaxException | IOException | NullPointerException e) {
 
-        } catch (JsonIOException | JsonSyntaxException | FileNotFoundException | NullPointerException ignored) {
+            if (filePath.isEmpty()){
+                LOGGER.error("Could not find any BCC config or launcher instance file: '{}', '{}', '{}'", BCC_FILE_PATH, CF_INSTANCE_FILE_PATH, MMC_INSTANCE_FILE_PATH);
+            } else {
+                LOGGER.error("An error occurred while reading the {} file: {}", filePath, e.getMessage());
+            }
         }
-        LOGGER.error("An error occurred while reading the {} file.", filePath);
+
         return null;
+    }
+
+
+    /**
+     * Checks in prioritized order which file to parse information from based on whether the file exists or not.
+     */
+    private static @NotNull String getFilePath() {
+        String filePath;
+        if (new File(BCC_FILE_PATH).isFile()) {
+            filePath = BCC_FILE_PATH;
+        } else if (new File(CF_INSTANCE_FILE_PATH).isFile()) {
+            filePath = CF_INSTANCE_FILE_PATH;
+        } else if (new File(MMC_INSTANCE_FILE_PATH).isFile()) {
+            filePath = MMC_INSTANCE_FILE_PATH;
+        } else {
+            filePath = "";
+        }
+        return filePath;
     }
 
 

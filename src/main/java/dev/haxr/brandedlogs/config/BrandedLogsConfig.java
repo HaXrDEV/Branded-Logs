@@ -9,5 +9,4 @@ import me.shedaniel.autoconfig.annotation.Config;
 public class BrandedLogsConfig implements ConfigData {
     // @Comment("")
     public boolean doWriteToResourceTextFile = false;
-    public boolean parseMinecraftInstanceJson = false;
 }
