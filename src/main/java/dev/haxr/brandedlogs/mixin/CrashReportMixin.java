@@ -12,10 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //? if >=1.21 {
 import net.minecraft.ReportType;
-//?}
-
-import java.io.File;
 import java.nio.file.Path;
+//?} else {
+/*import java.io.File;
+*///?}
+
 import java.util.List;
 
 /**
