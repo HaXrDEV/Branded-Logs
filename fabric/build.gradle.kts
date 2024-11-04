@@ -108,6 +108,12 @@ tasks.processResources {
         "minecraft" to common.mod.prop("mc_dep_fabric"),
         "description" to mod.description
     )
+    val refmap = "refmap" to "${mod.id}-common-$minecraft-refmap.json"
+    inputs.properties(refmap)
+
+    filesMatching("$loader.mixins.json") {
+        expand(refmap)
+    }
 }
 
 tasks.build {

@@ -12,7 +12,7 @@ logoFile = "icon.png" #"assets/${id}/icon.png"
 logoBlur = false
 
 [[mixins]]
-config = "common.mixins.json"
+config = "forge.mixins.json"
 
 [[dependencies.${id}]] #optional
 modId="forge" #mandatory

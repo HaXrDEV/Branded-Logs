@@ -4,8 +4,9 @@ plugins {
     id("architectury-plugin") version "3.4-SNAPSHOT" apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
 }
-stonecutter active "1.20.1" /* [SC] DO NOT EDIT */
+stonecutter active "1.21.3" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
+stonecutter.debug = true // Disable cache
 
 // Builds every version into `build/libs/{mod.version}/{loader}`
 stonecutter registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) {
@@ -34,7 +35,6 @@ for (it in stonecutter.tree.nodes) {
         dependsOn("run$type")
     }
 }
-
 
 
 // GitHub Action Stuff

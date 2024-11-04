@@ -1,8 +1,9 @@
 {
   "required": true,
-  "package": "dev.haxr.brandedlogs.neoforge.mixin",
+  "package": "dev.haxr.brandedlogs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CrashReportMixin"
   ],
   "injectors": {
     "defaultRequire": 1
