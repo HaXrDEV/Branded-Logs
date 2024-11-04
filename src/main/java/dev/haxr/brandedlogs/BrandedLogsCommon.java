@@ -30,7 +30,7 @@ public class BrandedLogsCommon {
     public static final String BCC_FILE_PATH = "./config/bcc.json";
     public static final String CF_INSTANCE_FILE_PATH = "./minecraftinstance.json";
     public static final String MMC_INSTANCE_FILE_PATH = "./instance.cfg";
-    public static final String AT_INSTANCE_FILE_PATH = "./instance.json";
+    public static final String AT_GD_INSTANCE_FILE_PATH = "./instance.json";
 
     //@Override
     public static void init() {
@@ -108,16 +108,22 @@ public class BrandedLogsCommon {
                 String nameKey;
                 String versionKey;
 
-                if (filePath.equals(CF_INSTANCE_FILE_PATH)) {
+                if (filePath.equals(CF_INSTANCE_FILE_PATH)) { // CurseForge Launcher
                     obj = obj.getAsJsonObject("manifest");
                     nameKey = "name";
                     versionKey = "version";
-                } else if (filePath.equals(AT_INSTANCE_FILE_PATH)) {
-                    obj = obj.getAsJsonObject("launcher");
-                    nameKey = "pack";
-                    versionKey = "version";
+                } else if (filePath.equals(AT_GD_INSTANCE_FILE_PATH)) { // ATLauncher / GDLauncher
+                    if (obj.has("launcher")) { // "launcher" section only exists in ATLaunchers instance file.
+                        obj = obj.getAsJsonObject("launcher");
+                        nameKey = "pack";
+                        versionKey = "version";
+                    } else {
+                        LOGGER.info("'{}' does not belong to ATLauncher, must be GDLauncher.", filePath);
+                        nameKey = "name";
+                        versionKey = "version"; // GDLauncher
+                    }
                 }
-                else {
+                else { // BCC config
                     nameKey = "modpackName";
                     versionKey = "modpackVersion";
                 }
@@ -125,6 +131,7 @@ public class BrandedLogsCommon {
 
                 result.add("modpackName", obj.get(nameKey));
                 result.add("modpackVersion", obj.get(versionKey));
+
                 return result;
             }
 
@@ -152,8 +159,8 @@ public class BrandedLogsCommon {
             filePath = CF_INSTANCE_FILE_PATH;
         } else if (new File(MMC_INSTANCE_FILE_PATH).isFile()) {
             filePath = MMC_INSTANCE_FILE_PATH;
-        } else if (new File(AT_INSTANCE_FILE_PATH).isFile()) {
-            filePath = AT_INSTANCE_FILE_PATH;
+        } else if (new File(AT_GD_INSTANCE_FILE_PATH).isFile()) {
+            filePath = AT_GD_INSTANCE_FILE_PATH;
         } else {
             filePath = "";
         }
@@ -166,8 +173,14 @@ public class BrandedLogsCommon {
      */
     public static String modpackInfo(JsonObject objArg) {
         try {
-            return "'" + objArg.get("modpackName").getAsString() + "' v" + objArg.get("modpackVersion").getAsString();
-        } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
+            String modpackName = objArg.has("modpackName") && !objArg.get("modpackName").isJsonNull()
+                    ? objArg.get("modpackName").getAsString()
+                    : "Unknown";
+            String modpackVersion = objArg.has("modpackVersion") && !objArg.get("modpackVersion").isJsonNull()
+                    ? objArg.get("modpackVersion").getAsString()
+                    : "Unknown";
+            return "'" + modpackName + "' v" + modpackVersion;
+        } catch (JsonIOException | JsonSyntaxException e) {
             return "";
         }
     }
@@ -177,12 +190,16 @@ public class BrandedLogsCommon {
         Path path = Paths.get(pathString);
         try {
             JsonObject obj = modpackInfoObj;
-            String content = obj.get(objectKey).getAsString();
-            Files.writeString(path, content);
-
-            LOGGER.info("File written successfully! (\'{}\')", pathString);
-
-        } catch (JsonIOException | JsonSyntaxException | NullPointerException ignored) {
+            String content = "";
+            if (obj.has(objectKey) && !obj.get(objectKey).isJsonNull()) {
+                content = obj.get(objectKey).getAsString();
+                Files.writeString(path, content);
+                LOGGER.info("File written successfully! (\'{}\')", pathString);
+            } else {
+                LOGGER.info("The requested JSON key '{}' does not exist or is empty. No file written.", objectKey);
+            }
+        } catch (JsonIOException | JsonSyntaxException e) {
+            LOGGER.info("An error occurred while processing the JSON data: {}", e.getMessage());
         } catch (IOException e) {
             LOGGER.info("An error occurred while writing to the file: {}", e.getMessage());
         }
