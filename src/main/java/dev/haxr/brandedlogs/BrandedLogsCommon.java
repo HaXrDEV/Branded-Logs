@@ -122,7 +122,7 @@ public class BrandedLogsCommon {
                         } else {
                             LOGGER.info("'{}' does not belong to ATLauncher, must be GDLauncher.", filePath);
                             nameKey = "name";
-                            versionKey = ""; // GDLauncher
+                            versionKey = "modpack::version_id"; // GDLauncher
                         }
                     }
                     case BCC_FILE_PATH -> {
@@ -133,8 +133,8 @@ public class BrandedLogsCommon {
 
                 LOGGER.info("Reading {} as JSON file", filePath);
 
-                result.add("modpackName", obj.get(nameKey));
-                result.add("modpackVersion", obj.get(versionKey));
+                result.add("modpackName", getJsonValue(obj, nameKey));
+                result.add("modpackVersion", getJsonValue(obj, versionKey));
 
                 return result;
             }
@@ -173,6 +173,65 @@ public class BrandedLogsCommon {
 
 
     /**
+     * Retrieves the value of a JSON object, handling both nested and non-nested keys.
+     *
+     * @param topLevelObject The top-level JSON object.
+     * @param path           The path to the desired value, formatted as "key" for top-level or "key1::key2::...::keyN" for nested.
+     * @return The value at the specified path as a JsonElement, or null if not found or if an error occurs.
+     */
+    public static JsonElement getJsonValue(JsonObject topLevelObject, String path) {
+        if (topLevelObject == null || path == null || path.isEmpty()) {
+            return null;
+        }
+
+        // Split path to check for nested or single key
+        String[] keys = path.split("::");
+
+        try {
+            if (keys.length == 1) {
+                // Handle non-nested (single key) request
+                if (topLevelObject.has(keys[0])) {
+                    return topLevelObject.get(keys[0]);
+                } else {
+                    return null; // Key not found
+                }
+            } else {
+                // Handle nested key request
+                JsonObject jsonObject = topLevelObject;
+                for (String key : keys) {
+                    if (jsonObject.has(key)) {
+                        JsonElement value = jsonObject.get(key);
+                        if (keys[keys.length - 1].equals(key)) {
+                            // If this is the last key, return its value
+                            return value;
+                        } else {
+                            // Move into the nested JSON object
+                            if (value.isJsonObject()) {
+                                jsonObject = value.getAsJsonObject();
+                            } else {
+                                // Path leads to a non-object, return null
+                                return null;
+                            }
+                        }
+                    } else {
+                        // Key not found, return null
+                        return null;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Handle exceptions, return null for safety
+            System.err.println("Exception occurred while navigating JSON: " + e.getMessage());
+            return null;
+        }
+
+        // If we've reached this point without returning, something went wrong
+        return null;
+    }
+
+
+
+    /**
      * Takes json object as argument and returns the modpack information as a string.
      */
     public static String modpackInfo(JsonObject objArg) {
@@ -183,7 +242,7 @@ public class BrandedLogsCommon {
             String modpackVersion = objArg.has("modpackVersion") && !objArg.get("modpackVersion").isJsonNull()
                     ? objArg.get("modpackVersion").getAsString()
                     : "Unknown";
-            return "'" + modpackName + "' v" + modpackVersion;
+            return "'" + modpackName + "' " + modpackVersion;
         } catch (JsonIOException | JsonSyntaxException e) {
             return "";
         }
