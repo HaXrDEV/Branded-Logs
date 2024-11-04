@@ -185,7 +185,12 @@ public class BrandedLogsCommon {
         }
     }
 
-
+    /**
+     * Writes the content of a specific JSON key from the `modpackInfoObj` JsonObject to a file at the specified path.
+     *
+     * @param pathString  The file path where the content will be written.
+     * @param objectKey   The key in the `modpackInfoObj` JsonObject whose value will be written to the file.
+     */
     public static void writeResourceTextFile(String pathString, String objectKey) {
         Path path = Paths.get(pathString);
         try {
@@ -207,7 +212,6 @@ public class BrandedLogsCommon {
 
     /**
      * Creates a modpack resource directory and any necessary parent directories.
-     * Returns silently if directory already exists.
      */
     public static void createResourceDirectory(String pathString) {
         // Specify the directory path
