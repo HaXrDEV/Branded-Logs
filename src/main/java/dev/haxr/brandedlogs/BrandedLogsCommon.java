@@ -29,7 +29,7 @@ public class BrandedLogsCommon {
     public static BrandedLogsConfig config;
     public static final String BCC_FILE_PATH = "./config/bcc.json";
     public static final String CF_INSTANCE_FILE_PATH = "./minecraftinstance.json";
-    public static final String MMC_INSTANCE_FILE_PATH = "./instance.cfg";
+    public static final String MMC_INSTANCE_FILE_PATH = "../instance.cfg";  // Uses two dots to go back one folder further than the game instance.
     public static final String AT_GD_INSTANCE_FILE_PATH = "./instance.json";
 
     //@Override
