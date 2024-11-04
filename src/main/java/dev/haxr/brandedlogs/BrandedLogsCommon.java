@@ -105,28 +105,32 @@ public class BrandedLogsCommon {
                 JsonObject obj = json.getAsJsonObject();
 
                 // Extract the relevant fields and create a new JsonObject
-                String nameKey;
-                String versionKey;
+                String nameKey = "";
+                String versionKey = "";
 
-                if (filePath.equals(CF_INSTANCE_FILE_PATH)) { // CurseForge Launcher
-                    obj = obj.getAsJsonObject("manifest");
-                    nameKey = "name";
-                    versionKey = "version";
-                } else if (filePath.equals(AT_GD_INSTANCE_FILE_PATH)) { // ATLauncher / GDLauncher
-                    if (obj.has("launcher")) { // "launcher" section only exists in ATLaunchers instance file.
-                        obj = obj.getAsJsonObject("launcher");
-                        nameKey = "pack";
-                        versionKey = "version";
-                    } else {
-                        LOGGER.info("'{}' does not belong to ATLauncher, must be GDLauncher.", filePath);
+                switch (filePath) {
+                    case CF_INSTANCE_FILE_PATH -> {
+                        obj = obj.getAsJsonObject("manifest");
                         nameKey = "name";
-                        versionKey = "version"; // GDLauncher
+                        versionKey = "version";
+                    }
+                    case AT_GD_INSTANCE_FILE_PATH -> {
+                        if (obj.has("launcher")) { // "launcher" section only exists in ATLaunchers instance file.
+                            obj = obj.getAsJsonObject("launcher");
+                            nameKey = "pack";
+                            versionKey = "version";
+                        } else {
+                            LOGGER.info("'{}' does not belong to ATLauncher, must be GDLauncher.", filePath);
+                            nameKey = "name";
+                            versionKey = ""; // GDLauncher
+                        }
+                    }
+                    case BCC_FILE_PATH -> {
+                        nameKey = "modpackName";
+                        versionKey = "modpackVersion";
                     }
                 }
-                else { // BCC config
-                    nameKey = "modpackName";
-                    versionKey = "modpackVersion";
-                }
+
                 LOGGER.info("Reading {} as JSON file", filePath);
 
                 result.add("modpackName", obj.get(nameKey));
@@ -138,7 +142,7 @@ public class BrandedLogsCommon {
         } catch (JsonIOException | JsonSyntaxException | IOException | NullPointerException e) {
 
             if (filePath.isEmpty()){
-                LOGGER.error("Could not find any BCC config or launcher instance file: '{}', '{}', '{}'", BCC_FILE_PATH, CF_INSTANCE_FILE_PATH, MMC_INSTANCE_FILE_PATH);
+                LOGGER.error("Could not find any BCC config or launcher instance file: '{}', '{}', '{}', '{}'", BCC_FILE_PATH, CF_INSTANCE_FILE_PATH, MMC_INSTANCE_FILE_PATH, AT_GD_INSTANCE_FILE_PATH);
             } else {
                 LOGGER.error("An error occurred while reading the {} file: {}", filePath, e.getMessage());
             }
