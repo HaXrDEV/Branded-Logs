@@ -4,7 +4,7 @@ This is a simple mod that allows modpack creators to print additional informatio
 
 *This mod was greatly inspired by [[Log More Info]](https://github.com/FederAndInk/log_more_info).*
 
-![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg) <!-- SVG version -->
+![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg)
 ![neoforge](https://raw.githubusercontent.com/thomasglasser/thomasglasser/refs/heads/main/files/badges/cozy/supported/neoforge_vector.svg)
 ![forge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg)
 
@@ -14,9 +14,22 @@ As a modpack author, you may often receive logs from players asking for help wit
 
 ## **How to use it:**
 
-For the mod to obtain the version number and name of your modpack, a configuration file from *Better Compatibility Checker* needs to be present. You can either use the *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)* mod itself to generate a config, or grab one here: [[bcc.json]](https://gist.github.com/HaXrBOT/7788f9c237344a286993ed4e1f66088d)
+The mod will automatically parse modpack information from supported launchers out of the box. However if a config file from *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)* is present (*bcc.json*), that will always take priority.
 
-Once that is done, you just need to fill out the fields *modpackName* and *modpackVersion*, and you're all set!
+#### Supported Launchers:
+
+* ✅ **CurseForge App** (*minecraftinstance.json*)
+* ✅ **Prism Launcher** (*instance.cfg*)
+* ✅ **ATLauncher** (*instance.json*)
+* ✅ **GDLauncher** (*instance.json*)
+* ❌ **Modrinth App** (*No longer uses profile.json file*)
+
+For the mod to obtain the version number and name of your modpack in an unsupported launcher, you must include a config file from *Better Compatibility Checker* in your pack. You can either use the *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)* mod itself to generate a config, or make one yourself using this template below:
+
+`./config/bcc.json` :
+```json
+{"modpackName": "INSERT_MODPACK_NAME_HERE", "modpackVersion": "INSERT_MODPACK_VERSION_HERE"}
+```
 
 ## **Dependencies:**
 
@@ -24,8 +37,8 @@ Once that is done, you just need to fill out the fields *modpackName* and *modpa
 
 Optional: *[Better Compatibility Checker](https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker)*
 
-
 ## **Links:**
+
 [![curseforge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/branded-logs)
 [![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/branded-logs)
 [![discord-singular](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg)](https://discord.gg/Kss5gBgeDA)
