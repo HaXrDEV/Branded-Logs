@@ -27,9 +27,10 @@ public class BrandedLogsCommon {
     public static final String MOD_ID = "brandedlogs";
     public static JsonObject modpackInfoObj;
     public static BrandedLogsConfig config;
+    public static final String BCC_FILE_PATH = "./config/bcc.json";
     public static final String CF_INSTANCE_FILE_PATH = "./minecraftinstance.json";
     public static final String MMC_INSTANCE_FILE_PATH = "./instance.cfg";
-    public static final String BCC_FILE_PATH = "./config/bcc.json";
+    public static final String AT_INSTANCE_FILE_PATH = "./instance.json";
 
     //@Override
     public static void init() {
@@ -111,10 +112,12 @@ public class BrandedLogsCommon {
                     obj = obj.getAsJsonObject("manifest");
                     nameKey = "name";
                     versionKey = "version";
-                    if(!new File(BCC_FILE_PATH).isFile()){
-                        LOGGER.error("\'{}\' could not be found. Falling back to \'{}\'", BCC_FILE_PATH, filePath);
-                    }
-                } else {
+                } else if (filePath.equals(AT_INSTANCE_FILE_PATH)) {
+                    obj = obj.getAsJsonObject("launcher");
+                    nameKey = "pack";
+                    versionKey = "version";
+                }
+                else {
                     nameKey = "modpackName";
                     versionKey = "modpackVersion";
                 }
@@ -149,6 +152,8 @@ public class BrandedLogsCommon {
             filePath = CF_INSTANCE_FILE_PATH;
         } else if (new File(MMC_INSTANCE_FILE_PATH).isFile()) {
             filePath = MMC_INSTANCE_FILE_PATH;
+        } else if (new File(AT_INSTANCE_FILE_PATH).isFile()) {
+            filePath = AT_INSTANCE_FILE_PATH;
         } else {
             filePath = "";
         }
