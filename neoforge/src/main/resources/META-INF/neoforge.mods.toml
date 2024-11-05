@@ -12,7 +12,7 @@ logoFile = "icon.png"
 logoBlur = false
 
 [[mixins]]
-config = "neoforge.mixins.json"
+config = "common.mixins.json"
 
 [[dependencies.${id}]] #optional
 modId="neoforge" #mandatory

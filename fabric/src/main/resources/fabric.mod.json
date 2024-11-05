@@ -22,7 +22,7 @@
     "modmenu": ["dev.haxr.brandedlogs.fabric.config.ModMenuIntegration"]
   },
   "mixins": [
-    "fabric.mixins.json"
+    "common.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.15",
