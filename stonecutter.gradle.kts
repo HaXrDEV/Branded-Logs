@@ -73,6 +73,10 @@ jobs:
         with:
           gradle-version: "wrapper"
 
+      - name: Make Gradle Wrapper Executable
+        if: ${'$'}{{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
       - name: Build JARs
         uses: Wandalen/wretry.action@master
         with:
