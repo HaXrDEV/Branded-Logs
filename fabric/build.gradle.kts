@@ -13,7 +13,6 @@ val common: Project = requireNotNull(stonecutter.node.sibling("")) {
 }
 
 version = "${mod.version}+$minecraft"
-group = "${mod.group}.$loader"
 base {
     archivesName.set("${mod.id}-$loader")
 }
@@ -51,9 +50,12 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${common.mod.dep("fabric_api")}")
 
-    modImplementation("com.terraformersmc:modmenu:${common.mod.dep("mod_menu_release")}")
-    //modImplementation("maven.modrinth:modmenu:${common.mod.dep("mod_menu_release")}")
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${common.mod.dep("cloth_config_version")}")
+    modImplementation("com.terraformersmc:modmenu:${common.mod.dep("mod_menu_release")}") {
+        exclude("net.fabricmc.fabric-api")
+    }
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${common.mod.dep("cloth_config_version")}") {
+        exclude("net.fabricmc.fabric-api")
+    }
 
     commonBundle(project(common.path, "namedElements")) { isTransitive = false }
     shadowBundle(project(common.path, "transformProductionFabric")) { isTransitive = false }

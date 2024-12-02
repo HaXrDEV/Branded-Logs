@@ -6,6 +6,7 @@ plugins {
 }
 stonecutter active "1.21.3" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
+stonecutter.debug = true // Disable cache
 
 // Builds every version into `build/libs/{mod.version}/{loader}`
 stonecutter registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) {
@@ -34,7 +35,6 @@ for (it in stonecutter.tree.nodes) {
         dependsOn("run$type")
     }
 }
-
 
 
 // GitHub Action Stuff

@@ -6,7 +6,6 @@ plugins {
 val minecraft = stonecutter.current.version
 
 version = "${mod.version}+$minecraft"
-group = "${mod.group}.common"
 base {
     archivesName.set("${mod.id}-common")
 }
@@ -28,15 +27,14 @@ dependencies {
         implementation(it)
     }
 
-    //if (stonecutter.eval(minecraft, "!1.20.1"))
-    //    modApi("me.shedaniel.cloth:cloth-config-neoforge:${mod.dep("cloth_config_version")}")
-    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}")
-    //modApi("me.shedaniel.cloth:cloth-config-forge:${mod.dep("cloth_config_version")}")
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}") {
+        exclude("net.fabricmc.fabric-api")
+    }
 
 }
 
 loom {
-    accessWidenerPath = rootProject.file("src/main/resources/brandedlogs.accesswidener")
+    accessWidenerPath = rootProject.file("src/main/resources/${mod.id}.accesswidener")
 
     decompilers {
         get("vineflower").apply { // Adds names to lambdas - useful for mixins
