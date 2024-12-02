@@ -6,7 +6,7 @@ plugins {
 }
 stonecutter active "1.21.3" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
-stonecutter.debug = true // Disable cache
+// stonecutter.debug = true // Disable cache
 
 // Builds every version into `build/libs/{mod.version}/{loader}`
 stonecutter registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) {
@@ -69,14 +69,14 @@ jobs:
             ${'$'}{{runner.os}}-gradle
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "wrapper"
 
       - name: Build JARs
         uses: Wandalen/wretry.action@master
         with:
-          command: "gradle chiseledBuild"
+          command: "./gradlew chiseledBuild"
           attempt_limit: 3
 """)
 
